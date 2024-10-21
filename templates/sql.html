@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Techcuriosity</title>
+    <meta name="description" content=""/>
+    <link rel="icon" type="image/x-icon" href="/static/img/logo.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .editor-header {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: center;
+        }
+        .instructions {
+            padding: 10px;
+            background-color: #e7f3fe;
+            border: 1px solid #b9e0f5;
+            margin-bottom: 10px;
+        }
+        .editor-wrapper {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+        .line-numbers {
+            background: #f0f0f0;
+            border-right: 1px solid #ccc;
+            padding: 10px 10px 10px 5px;
+            text-align: right;
+            user-select: none;
+            min-width: 20px;
+            font-size: 13px; /* Minimum width for line numbers */
+        }
+        .code-editor {
+            width: 100%;
+            height: 300px;
+            border: none;
+            padding: 10px;
+            font-family: monospace;
+            resize: none;
+            background-color: black;
+            color: white;
+        }
+        input[type="submit"] {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            color: red;
+            background-color: rgb(51, 249, 51);
+        }
+        .output {
+            margin-top: 20px;
+            
+
+        }
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+        }
+
+        .output .output tr{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <div class="instructions">
+            <h3>Instructions:</h3>
+            <ul>
+                <li>Write your HTML code in the editor below.</li>
+                <li>Press the <strong>Tab</strong> key to indent your code (4 spaces).</li>
+                <li>Click the <strong>Run Code</strong> button to preview your code output.</li>
+            </ul>
+        </div>
+
+        <div class="editor-header">
+            <h2>SQL Editor</h2>
+        </div>
+
+        <form action="/course/sql" method="post">
+            <div class="editor-wrapper">
+                <div class="line-numbers" id="lineNumbers"></div>
+                <textarea class="code-editor" spellcheck="false" id="codeEditor" name="code" placeholder="Write your code here...">{{sql_query}}</textarea>
+            </div>
+            <input type="submit" value="Run Code"/>
+        </form>
+
+        <div class="output">
+            <div class="output">
+                {% if results %}
+                <table border="5px solid" width="100%" style="text-align: center; ">
+                    <tr>
+                        {% for column in results[0].keys() %}
+                        <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for row in results %}
+                   
+                    <tr style="padding: 10px;">
+                        {% for column in row %}
+                        <td>{{ column }}</td>
+                        {% endfor %}
+                    </tr>
+                    
+                    {% endfor %}
+                </table>
+                {% elif message %}
+                <p>{{ message }}</p>
+                {% elif error %}
+                <p style="color:red;">Error: {{ error }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const textarea = document.getElementById('codeEditor');
+        const lineNumbers = document.getElementById('lineNumbers');
+
+        // Update line numbers on input
+        textarea.addEventListener('input', updateLineNumbers);
+
+        // Initialize line numbers on page load
+        function updateLineNumbers() {
+            const lines = textarea.value.split('\n').length;
+            lineNumbers.innerHTML = '';
+
+            for (let i = 1; i <= lines; i++) {
+                lineNumbers.innerHTML += i + '<br>';
+            }
+        }
+
+        // Initial call to populate line numbers
+        updateLineNumbers();
+        document.getElementById('codeEditor').addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+                event.preventDefault(); // Prevent the default tab behavior
+                
+                const textarea = event.target;
+                const start = textarea.selectionStart;
+                const end = textarea.selectionEnd;
+
+                // Insert 4 spaces for a tab at the caret position
+                textarea.value = textarea.value.substring(0, start) + '    ' + textarea.value.substring(end);
+
+                // Move the caret after the spaces
+                textarea.selectionStart = textarea.selectionEnd = start + 4;
+            }
+        }); 
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg height="308.8" preserveAspectRatio="xMidYMid meet" version="1.0" viewBox="0.0 0.0 196.0 308.8" width="196.0" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify"
+><defs
+  ><clipPath id="a"
+    ><path d="M 0 0 L 195.96875 0 L 195.96875 308.839844 L 0 308.839844 Z M 0 0"
+    /></clipPath
+  ></defs
+  ><g
+  ><g clip-path="url(#a)" id="change1_1"
+    ><path d="M 0 15.996094 L 0 293.453125 C 0 306.824219 15.042969 313.511719 26.742188 305.152344 L 187.199219 173.109375 C 198.898438 163.082031 198.898438 144.695312 187.199219 134.667969 L 26.742188 2.625 C 15.042969 -4.058594 0 2.625 0 15.996094" fill="#fff"
+    /></g
+  ></g
+></svg
+>
